@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Ordr: Rstaurant Mnu Systm</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/4.1.2/css/foundation.min.css">
+
+  </head>
+  <body ng-controller='PostsCtrl' >
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Angular</h1>
+        <hr>
+        <div class="row">
+            <div class="large-4 columns" id="tables">
+                <h2>Posts</h2>
+                <ul>
+                  <li ng-repeat="post in posts">
+                    <a href="#" ng:click="setPost(post.id)" ng-bind-html-unsafe="post.title"></a>
+                  </li>
+                </ul>
+                <button ng:click='fetchNextPage();'>Show More...</button>
+            </div>
+            <div class="large-8 columns" ng:show="selPost">
+               <h2 ng-bind-html-unsafe="selPost.title"></h2> 
+               <div ng-bind-html-unsafe="selPost.content">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script type="text/javascript">
+
+//Controller
+
+function PostsCtrl($scope) {
+  $scope._blog_url = "http://wp.waltermiller.ca/?json=1";
+  $scope.posts = []; //response.posts;
+  $scope.orderProp = 'date';
+  $scope.selPost = null;
+  $scope._page = 1;
+
+  $scope.setPost = function(id){
+    //fetch a particular post
+    $scope.selPost = $.grep($scope.posts, function(a){
+      return a.id == id;
+    })[0];
+    return false;
+  };
+
+  $scope.fetchNextPage = function(){
+    $.getJSON($scope._blog_url + "&page=" + $scope._page + "&callback=?").then(function(response) {
+      response.posts.forEach(function (post) {
+        $scope.posts.push(post);
+      });
+      $scope.$apply();
+    });
+
+    $scope._page++;
+  };
+
+  $scope.fetchNextPage();
+};
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+Example showing angular.js reading from wp-json-api.
