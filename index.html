@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width" />
     <title></title>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/4.1.2/css/foundation.min.css">
+    <style type="text/css">
+      #post-links{
+        list-style: none;
+      }
+    </style>
 
   </head>
   <body ng-controller='PostsCtrl' >
@@ -15,8 +20,8 @@
         <div class="row">
             <div class="large-4 columns" id="tables">
                 <h2>Posts</h2>
-                <ul>
-                  <li ng-repeat="post in posts">
+                <ul id='post-links'>
+                  <li class='post-link' ng-repeat="post in posts">
                     <a ng:click="setPost(post.id)" ng-bind-html-unsafe="post.title"></a>
                   </li>
                 </ul>
