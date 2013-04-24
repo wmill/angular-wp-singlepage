@@ -8,6 +8,24 @@
     <style type="text/css">
       #post-links{
         list-style: none;
+        perspective: 400px;
+        perspective-origin:50% 50%;
+        
+      }
+      .post-link{
+        -webkit-transform: translateZ(-200px) rotateY(20deg);
+        -webkit-transform: transform-style: preserve-3d;
+        transition: all 1s ease-in-out;
+        transform: translateZ(0px) rotateY(20deg);
+        transform-style: preserve-3d;
+
+      }
+      .post-link:hover{
+        -webkit-transform: translateZ(200px) rotateY(0deg);
+        transform: rotateY(0deg) translateZ(0px);
+        transform-style: preserve-3d;
+        border: solid red 2px;
+        font-size: +1em;
       }
     </style>
 
@@ -46,6 +64,8 @@
 
 function PostsCtrl($scope) {
   $scope._blog_url = "http://wp.waltermiller.ca/?json=1";
+  $scope._blog_url = "/posts.json";
+
   $scope.posts = []; //response.posts;
   $scope.selPost = null;
   $scope._page = 1;
@@ -59,7 +79,8 @@ function PostsCtrl($scope) {
   };
 
   $scope.fetchNextPage = function(){
-    $.getJSON($scope._blog_url + "&page=" + $scope._page + "&callback=?").then(function(response) {
+    // $.getJSON($scope._blog_url + "&page=" + $scope._page + "&callback=?").then(function(response) {
+    $.getJSON("/posts.json").then(function(response) {
       response.posts.forEach(function (post) {
         $scope.posts.push(post);
       });
