@@ -10,22 +10,34 @@
         list-style: none;
         perspective: 400px;
         perspective-origin:50% 50%;
-        
+
+        -webkit-perspective: 400px;
+        -webkit-perspective-origin:50% 50%;        
       }
       .post-link{
-        -webkit-transform: translateZ(-200px) rotateY(20deg);
-        -webkit-transform: transform-style: preserve-3d;
-        transition: all 1s ease-in-out;
+
+        transition: all .2s ease-in-out;
         transform: translateZ(0px) rotateY(20deg);
         transform-style: preserve-3d;
 
+        -webkit-transition: all .2s ease-in-out;
+        -webkit-transform: translateZ(0px) rotateY(20deg);
+        -webkit-transform-style: preserve-3d;
+      }
+      .post-link a{
+        width: 100%;
       }
       .post-link:hover{
-        -webkit-transform: translateZ(200px) rotateY(0deg);
+
         transform: rotateY(0deg) translateZ(0px);
         transform-style: preserve-3d;
-        border: solid red 2px;
+        box-shadow: 10px 10px 5px #888;
+        border: solid red 2px;   
         font-size: +1em;
+
+        -webkit-transform: rotateY(0deg) translateZ(0px);
+        -webkit-transform-style: preserve-3d;
+        -webkit-box-shadow: 10px 10px 5px #888;
       }
     </style>
 
@@ -39,8 +51,8 @@
             <div class="large-4 columns" id="tables">
                 <h2>Posts</h2>
                 <ul id='post-links'>
-                  <li class='post-link' ng-repeat="post in posts">
-                    <a ng:click="setPost(post.id)" ng-bind-html-unsafe="post.title"></a>
+                  <li class='post-link' ng:click="setPost(post.id)" ng-repeat="post in posts">
+                    <a  ng-bind-html-unsafe="post.title"></a>
                   </li>
                 </ul>
                 <button ng:click='fetchNextPage();'>Show More...</button>
