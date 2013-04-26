@@ -12,9 +12,14 @@
         perspective-origin:50% 50%;
 
         -webkit-perspective: 400px;
-        -webkit-perspective-origin:50% 50%;        
+        -webkit-perspective-origin:50% 50%;    
+
+        -ms-perspective: 400px;
+        -ms-perspective-origin:50% 50%;         
       }
       .post-link{
+
+        z-index: 50;
 
         transition: all .2s ease-in-out;
         transform: translateZ(0px) rotateY(20deg);
@@ -23,21 +28,32 @@
         -webkit-transition: all .2s ease-in-out;
         -webkit-transform: translateZ(0px) rotateY(20deg);
         -webkit-transform-style: preserve-3d;
+
+        -ms-transition: all .2s ease-in-out;
+        -ms-transform: translateZ(0px) rotateY(20deg);
+        -ms-transform-style: preserve-3d;
       }
       .post-link a{
         width: 100%;
       }
       .post-link:hover{
 
+        z-index: 100;
+
         transform: rotateY(0deg) translateZ(0px);
         transform-style: preserve-3d;
         box-shadow: 10px 10px 5px #888;
-        border: solid red 2px;   
+        /*border: solid #f80 2px; */
+        background-color: #FFB259; 
         font-size: +1em;
 
         -webkit-transform: rotateY(0deg) translateZ(0px);
         -webkit-transform-style: preserve-3d;
         -webkit-box-shadow: 10px 10px 5px #888;
+
+        -ms-transform: rotateY(0deg) translateZ(0px);
+        -ms-transform-style: preserve-3d;
+        -ms-box-shadow: 10px 10px 5px #888;
       }
     </style>
 
@@ -76,7 +92,7 @@
 
 function PostsCtrl($scope) {
   $scope._blog_url = "http://wp.waltermiller.ca/?json=1";
-  $scope._blog_url = "/posts.json";
+  //$scope._blog_url = "/posts.json";
 
   $scope.posts = []; //response.posts;
   $scope.selPost = null;
@@ -91,8 +107,8 @@ function PostsCtrl($scope) {
   };
 
   $scope.fetchNextPage = function(){
-    // $.getJSON($scope._blog_url + "&page=" + $scope._page + "&callback=?").then(function(response) {
-    $.getJSON("/posts.json").then(function(response) {
+    $.getJSON($scope._blog_url + "&page=" + $scope._page + "&callback=?").then(function(response) {
+    //$.getJSON("/posts.json").then(function(response) {
       response.posts.forEach(function (post) {
         $scope.posts.push(post);
       });
